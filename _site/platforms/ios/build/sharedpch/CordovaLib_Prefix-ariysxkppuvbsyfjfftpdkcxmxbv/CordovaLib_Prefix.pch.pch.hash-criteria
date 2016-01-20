@@ -16,9 +16,9 @@ i386
 -mios-simulator-version-min=6.0
 -iquote
 -iquote
--I/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator/include
+-I/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator/include
 -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include
--F/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator
+-F/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator
 -DDEBUG
 i386-apple-darwin14.1.0
 "4.2.1 Compatible Apple LLVM 6.1.0 (clang-602.0.49)"

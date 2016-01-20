@@ -4,21 +4,21 @@ title: Module 1&#58; Setup the project
 ---
 
 ### Create a new Project
-1. Create a PhoneGap project using either the PhoneGap CLI or the PhoneGap Desktop Application you learned in the first workshop. For example:
+1. Create a PhoneGap project using either the PhoneGap CLI or the PhoneGap Desktop Application. For example:
 
-        phonegap create pgworkshop com.yourname.workshop PGWorkshop
+        phonegap create pgpush com.yourname.workshop.push PGPush
 
 2. Navigate into the newly created project folder:
 
-        cd pgworkshop        
+        cd pgpush
 
 ### Replace Contents
-1. The final application project we'll be using is located [here](https://github.com/macdonst/pocket-guide). It contains a **solutions** folder with the completed step by step lesson to reference. If you want to work along, copy the contents or
-download the [zip file for the project](https://github.com/macdonst/pocket-guide/archive/master.zip) or clone it with git:
+1. The final application project we'll be using is located [here](https://github.com/macdonst/push-workshop). It contains a **solutions** folder with the completed step by step lesson to reference. If you want to work along, copy the contents or
+download the [zip file for the project](https://github.com/macdonst/push-workshop/archive/master.zip) or clone it with git:
 
-        git clone https://github.com/macdonst/pocket-guide
+        git clone https://github.com/macdonst/push-workshop
 
-1. Now copy the **solutions/www1**, **config.xml** and **pgbot-love.png** files from the pocket-guide project into your newly created project root and overwrite the default files currently there.
+1. Now copy the **solutions/www1**, **config.xml** and **pgbot-love.png** files from the push-workshop project into your newly created project root and overwrite the default files currently there.
 
    > The **config.xml** file has some settings which will automatically install the project plugin dependencies, but you could optionally add them manually. The **pgbot-love.png** is the default icon for this application referenced in config.xml.
 

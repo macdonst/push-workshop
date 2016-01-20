@@ -1,2 +1,2 @@
 dependencies: \
-  /Users/hschinsk/github-projects/pocket-guide/platforms/ios/AmsterdamGuide/main.m
+  /Users/hschinsk/github-projects/push-workshop/platforms/ios/AmsterdamGuide/main.m

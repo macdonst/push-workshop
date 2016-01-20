@@ -17,11 +17,11 @@ i386
 -mios-simulator-version-min=6.0
 -iquote
 -iquote
--I/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator/include
--I/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator/usr/local/lib/include
--I/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/UninstalledProducts/include
--I/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator
--F/Users/hschinsk/github-projects/pocket-guide/platforms/ios/build/emulator
+-I/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator/include
+-I/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator/usr/local/lib/include
+-I/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/UninstalledProducts/include
+-I/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator
+-F/Users/hschinsk/github-projects/push-workshop/platforms/ios/build/emulator
 i386-apple-darwin14.1.0
 "4.2.1 Compatible Apple LLVM 6.1.0 (clang-602.0.49)"
 SDK_PRODUCT_BUILD_VERSION=12F69

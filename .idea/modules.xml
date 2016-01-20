@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/pocket-guide.iml" filepath="$PROJECT_DIR$/.idea/pocket-guide.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/push-workshop.iml" filepath="$PROJECT_DIR$/.idea/push-workshop.iml" />
     </modules>
   </component>
 </project>

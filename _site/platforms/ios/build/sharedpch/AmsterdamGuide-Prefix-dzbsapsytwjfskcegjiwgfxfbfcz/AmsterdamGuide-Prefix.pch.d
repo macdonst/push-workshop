@@ -1,5 +1,5 @@
 dependencies: \
-  /Users/hschinsk/github-projects/pocket-guide/platforms/ios/AmsterdamGuide/AmsterdamGuide-Prefix.pch \
+  /Users/hschinsk/github-projects/push-workshop/platforms/ios/AmsterdamGuide/AmsterdamGuide-Prefix.pch \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.3.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.3.sdk/System/Library/Frameworks/CoreFoundation.framework/Headers/CoreFoundation.h \
   /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator8.3.sdk/usr/include/sys/types.h \
