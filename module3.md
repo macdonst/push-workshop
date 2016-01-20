@@ -1,59 +1,40 @@
 ---
 layout: module
-title: Module 3&#58; Best Practice - Single Page Architecture
+title: Module 3&#58; Handling your first notification
 ---
 
 ### Overview
-Single page applications are popular and considered the best approach for hybrid app development. In a single page application, state changes occur via JavaScript using templates and DOM manipulation rather than making calls to a server to return an HTML page. The logic stays on the client side and routing and templates are used to manipulate views when actions occur. 
- 
- >Numerous popular frameworks support this concept (Angular, Ember etc) and have it built-in to the framework. In those cases you will define your routes and templates as the framework prescribes.
+Now that we have a registration ID we are now ready to receive our push notification in our app. In this case we'll setup our application to add a new card into our UI when a push notification is received.
 
- 
 ## Steps
-1. Open up the **lib/router.js** file and look through the code. This library is just a simple routing mechanism based on hash tag routing.
-             
-2. Now open **www/js/app.js** and take a look at the routes being used for this application:
- 
-       service.initialize().done(function () {
-            router.addRoute('', function() {
-                slider.slidePage(new HomeView(service).render().$el);
-            });
-       
-           router.addRoute('items/:id', function(id) {
-               service.findById(parseInt(id)).done(function(item) {
-                   slider.slidePage(new ItemView(item).render().$el);
-               });
-           });
-       
-           router.start();
-       });
+1. Open **www/js/index.js** and add the following code after the push error handler:
 
-  When the URL is empty (no additional parameters), we show the home view with the list of items. However if we find the URL contains
-  `/items` with a given id, then we look up the id and show the `ItemView` for that item.
+            app.push.on('notification', function(data) {
+                console.log('notification event');
+                var cards = document.getElementById("cards");
+                var push = '<div class="row">' +
+                  '<div class="col s12 m6">' +
+                  '  <div class="card darken-1">' +
+                  '    <div class="card-content black-text">' +
+                  '      <span class="card-title black-text">' + data.title + '</span>' +
+                  '      <p>' + data.message + '</p>' +
+                  '      <p>' + data.additionalData.foreground + '</p>' +
+                  '    </div>' +
+                  '  </div>' +
+                  ' </div>' +
+                  '</div>';
+                cards.innerHTML += push;
 
-> [PageSlider](https://github.com/ccoenraets/PageSlider) is a simple library providing hardware accelerated page transitions for Mobile Apps
+Now when a notification message is received while the app is the foreground your UI will automatically update.
 
-3. Open **www/js/HomeView.js** and notice how you can render template content within another template, for example, the `ListView` items are populated here within the `content` tag of the home template when the `HomeView` is rendered.
+<img class="screenshot-lg" src="images/push3.png"/>
 
-            this.render = function() {
-                this.$el.html(this.template());
-                $('.content', this.$el).html(listView.$el);
-                 return this;
-            };
-            
-            this.findByName = function() {
-                service.findByName($('.search-key').val()).done(function(items) {
-                    listView.setListItems(items);
-                });
-            };
-        
-            this.findAll = function() {
-                service.findAll().done(function(items) {
-                    listView.setListItems(items);
-                });
-            };
+If your app is in the background then the notification will live in the shade and once your user clicks on the notification, the notification handler will be run and your UI will be updated.
 
-> See [this workshop](http://macdonst.github.io/phonegap-workshop/) for a better understanding of how this architecture was put together. 
+<img class="screenshot" src="images/push2.png"/>
+<img class="screenshot" src="images/push3.png"/>
+
+> It's very important to note that your notification handler does not **normally** run when your app is in the background. We'll discuss how to modify your app when it is in the background in a later module.
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">
