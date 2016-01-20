@@ -6,13 +6,13 @@ title: PhoneGap Day US Push Workshop
 ## What You Will Build
 In this workshop you will learn how to create a simple mobile application using PhoneGap with HTML, JavaScript and CSS. We'll go over a the ways to handle incoming push notifications to provide a native experience.
 
-<img class="screenshot" src="images/flow1.jpg"/>
-<img class="screenshot" src="images/flow2-detail-view.jpg"/>
-<img class="screenshot" src="images/flow3-map-details.jpg"/>
+<img class="screenshot" src="images/push1.png"/>
+<img class="screenshot" src="images/push2.png"/>
+<img class="screenshot" src="images/push3.png"/>
 
 ## What You Will Learn
 
-- How to handle specific mobile challenges such as handling click delay, native alerts, check for offline and use a single page architecture.
+- How to handle specific notification types such as foreground push, background push, action buttons, redirecting to a specifc page in your app.
 
 - How to use several PhoneGap APIs via plugins
 
