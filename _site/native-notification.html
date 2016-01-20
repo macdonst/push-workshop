@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>PhoneGap Day Workshop</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/styles.css" rel="stylesheet">
+    
+    
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-721308-2', 'hollychinsky.github.io');
+      ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PhoneGap Day Workshop 2015</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a
+                        href="https://github.com/hollyschinsky/pocket-guide"><img
+                        src="images/icon-github.png" style="border: none;margin: -4px 0;height: 28px;width: 28px;"/>
+                    GitHub
+                    Project</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+<div class="container">
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-8">
+        <h1>Module 5&#58; Using Native Notification</h1>
+        <!--<hr/>-->
+        <p>A default JavaScript alert gives away the fact that your application is not native. In this section, we set up the basic infrastructure to display native alerts when the application is running on a device, and fall back to default JavaScript alerts when it is running in the browser.</p>
+
+<p><img src="images/oldnotification.png" alt="" /></p>
+
+<h2 id="steps">Steps</h2>
+
+<ol>
+  <li>
+    <p>Make sure you are in the <strong>pg-workshop</strong> directory and add the <a href="https://github.com/apache/cordova-plugin-dialogs/">native dialogs plugin</a> to your project:</p>
+
+    <p><code>
+ phonegap plugin add org.apache.cordova.dialogs
+</code>
+ &gt; When doing basic testing with the PhoneGap Developer app you do not need to add the core PhoneGap plugins</p>
+  </li>
+  <li>
+    <p>In index.html, add the following script tag (as the first script tag at the bottom of the body):</p>
+
+    <p><code>
+ &lt;script src="cordova.js"&gt;&lt;/script&gt;
+</code></p>
+  </li>
+</ol>
+
+<blockquote>
+  <p>This instructs the PhoneGap CLI to inject a platform specific version of cordova.js at build time. In other words, cordova.js doesn’t need to be (and shouldn’t be) present in your <strong>pg-workshop/www</strong> folder.</p>
+</blockquote>
+
+<ol>
+  <li>When running on a device, the <code>navigator.notification</code> object is available via a core Cordova Dialogs plugin so we can take advantage of
+native alerts.</li>
+</ol>
+
+<p>Open <strong>js/app.js</strong>, and add this code block beneath the “Device Ready Event”.</p>
+
+<pre><code>```
+document.addEventListener('deviceready', function () {
+  if (navigator.notification) { // Override default HTML alert with native dialog
+      window.alert = function (message) {
+          navigator.notification.alert(
+              message,    // message
+              null,       // callback
+              "Workshop", // title
+              'OK'        // buttonName
+          );
+      };
+  }
+}, false);
+```   The above code overrides the `window.alert()` function and replace its default implementation with a call to `navigator.notification.alert()`. 
+</code></pre>
+
+<ol>
+  <li>Test the application. Click the info button located on the right side of the home screen header bar.
+    <ul>
+      <li>When you run the application in the browser, you should see a standard browser alert.</li>
+      <li>When you run the application on your device, you should see a native alert.</li>
+    </ul>
+  </li>
+</ol>
+
+<p><img src="images/newnotification.png" alt="" /></p>
+
+<div class="row" style="margin-top:40px;">
+<div class="col-sm-12">
+<a href="build-project.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> 
+Previous</a>
+<a href="avoid-300ms-delay.html" class="btn btn-default pull-right">Next <i class="glyphicon 
+glyphicon-chevron-right"></i></a>
+</div>
+</div>
+
+
+
+
+        <!--<div class="row" style="margin-top: 30px;">-->
+            <!--<div class="col-xs-12">-->
+                <!--<div id="disqus_thread"></div>-->
+                <!--<script type="text/javascript">-->
+                    <!--/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */-->
+                    <!--var disqus_shortname = 'salesforcedeveloperworkshop'; // required: replace example with your forum shortname-->
+
+                    <!--/* * * DON'T EDIT BELOW THIS LINE * * */-->
+                    <!--(function() {-->
+                        <!--var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;-->
+                        <!--dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';-->
+                        <!--(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);-->
+                    <!--})();-->
+                <!--</script>-->
+                <!--<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>-->
+                <!--<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4 right-nav">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="font-variant:small-caps;font-size: 18px;">modules</div>
+            <ol class="list-group">
+                <li><a href="create-project.html">Creating a PhoneGap Project</a></li>
+                <li><a href="build-project.html">Building a PhoneGap Project</a></li>
+                <li><a href="setup-files.html">Setting Up the Workshop Files</a></li>
+                <li><a href="data-storage.html">Choosing a Data Storage Strategy</a></li>
+                <li><a href="native-notification.html">Using Native Notification</a></li>
+                <li><a href="avoid-300ms-delay.html">Avoiding the 300ms Click Delay</a></li>
+                <li><a href="single-page-app.html">Setting Up a Single-Page Application</a></li>
+                <li><a href="handlebars-templates.html">Using Handlebars Templates</a></li>
+                <li><a href="creating-view-classes.html">Creating View Classes</a></li>
+                <li><a href="routing.html">Implementing View Routing</a></li>
+                <li><a href="hardware-acceleration.html">Using Hardware Acceleration</a></li>
+                <li><a href="add-to-calendar.html">Add Native Add to Calendar Feature</a></li>
+                <li><a href="share.html">Adding Native Share Feature</a></li>
+                <li><a href="polish.html">Adding Polish</a></li>
+            </ol>
+            <p></p>
+        </div>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
+   data-url="http://hollyschinsky.github.io/phonegap-workshop"
+   data-text="PhoneGap Tutorial #Cordova #PhoneGap">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<a href="https://twitter.com/devgirlfl" class="twitter-follow-button" data-show-count="true"
+   data-size="large" data-lang="en">Follow
+    @devgirlfl</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+    <div id="footer">
+        <a href="http://devgirl.org"><p class="text-muted">Holly Schinsky</p></a>
+    </div>    <!-- Site footer -->
+</div>
+
+
+<script src="lib/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

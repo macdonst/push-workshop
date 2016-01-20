@@ -1,0 +1,48 @@
+ul {
+    clear: both;
+}
+
+.bar-header-secondary>input {
+    margin-top: 6px;
+    height: 31px;
+}
+
+.table-view {
+    margin: 0 !important;
+    border: none;
+}
+
+.pad {
+    padding: 5px;
+}
+.media-object {
+    width: 64px;
+    height: 64px;
+    border-radius: 7px;
+}
+
+.media>p {
+    color: #444;
+}
+.bar-nav {
+    background-color: #ec4549;
+    color: #000000;
+}
+.title {
+    color: #ffffff;
+}
+.bar-nav .icon {
+    color: #ffffff;
+}
+.rating {
+    color:#ffaa00;
+    font-size:140%;
+}
+.bar-header-secondary {
+    background-color: #fff4e0;
+
+}
+.map_canvas {
+    width:100%;
+    height:inherit;
+}

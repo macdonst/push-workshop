@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+
+    <title>PhoneGap Day Workshop</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/styles.css" rel="stylesheet">
+    
+    
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-721308-2', 'hollychinsky.github.io');
+      ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+<div class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="index.html">PhoneGap Day Workshop 2015</a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a
+                        href="https://github.com/hollyschinsky/pocket-guide"><img
+                        src="images/icon-github.png" style="border: none;margin: -4px 0;height: 28px;width: 28px;"/>
+                    GitHub
+                    Project</a></li>
+            </ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</div>
+
+
+<div class="container">
+
+<div class="row">
+
+    <div class="col-xs-12 col-sm-8">
+        <h1>Module 8&#58; Using Handlebars Templates</h1>
+        <!--<hr/>-->
+        <p>Writing HTML fragments in JavaScript and programmatically inserting them into the DOM is tedious. It makes your application harder to write and harder to maintain. HTML templates address this issue by decoupling the UI definition (HTML markup) from your code. There are a number of great HTML template solutions, including Mustache.js, Handlebars.js, and Underscore.js to name a few.</p>
+
+<p>In this module, we create two templates to streamline the code of the PhoneGap Conference Workshop application. We use 
+<a href="http://handlebarsjs.com/">Handlebars.js</a> but the same result can be achieved using the other HTML template solutions.</p>
+
+<h2 id="step-1-define-the-templates">Step 1: Define the templates</h2>
+
+<p>Modify index.html as follows:</p>
+
+<ol>
+  <li>
+    <p>Add a script tag to include the handlebars.js library:</p>
+
+    <p><code>
+ &lt;script src="lib/handlebars.js"&gt;&lt;/script&gt;
+</code></p>
+  </li>
+  <li>
+    <p>Add ratchet.css and styles.css to the head of index.html</p>
+
+    <blockquote>
+      <p><a href="http://goratchet.com/">Ratchet</a> is a simple CSS toolkit that provides styles for mobile applications.</p>
+    </blockquote>
+
+    <p>````</p>
+    <link href="assets/ratchet/css/ratchet.css" rel="stylesheet" />
+
+    <link href="assets/css/styles.css" rel="stylesheet" />
+
+    <p>````</p>
+  </li>
+  <li>
+    <p>Create an HTML template to render the Home View. Add this script tag as the first child of the body tag:</p>
+
+    <p><code>
+ &lt;script id="home-tpl" type="text/template"&gt;
+     &lt;header class="bar bar-nav"&gt;
+         &lt;h1 class="title"&gt;Conference App&lt;/h1&gt;
+     &lt;/header&gt;
+     &lt;div class="bar bar-standard bar-header-secondary"&gt;
+         &lt;input class='search-key' type="search"/&gt;
+     &lt;/div&gt;
+     &lt;div class="content"&gt;&lt;/div&gt;
+ &lt;/script&gt;
+</code></p>
+  </li>
+  <li>
+    <p>Create an HTML template to render the sessions list. Add this script tag immediately after the previous one:</p>
+
+    <p>````</p>
+
+    <script id="session-list-tpl" type="text/template">
+     <ul class="table-view">
+         {{#each this}}
+         <li class="table-view-cell media">
+           <a href="#sessions/{{ id }}">
+               <img class="media-object pull-left" src="assets/pics/{{pic}}">
+               <div class="media-body">
+                   {{firstName}} {{lastName}}
+                   <p>{{title}}</p>
+               </div>
+           </a>
+         </li>
+         {{/each}}
+     </ul>
+ </script>
+
+    <p>````</p>
+  </li>
+</ol>
+
+<h2 id="step-2-use-the-templates">Step 2: Use the Templates</h2>
+
+<p>Modify the immediate function in app.js as follows:</p>
+
+<ol>
+  <li>
+    <p>Immediately before the <em>service</em> variable declaration, declare two variables that hold the compiled version of the templates defined above:</p>
+
+    <p><code>
+ var homeTpl = Handlebars.compile($("#home-tpl").html());
+ var sessionListTpl = Handlebars.compile($("#session-list-tpl").html());
+</code></p>
+  </li>
+  <li>
+    <p>Modify <strong>renderHomeView()</strong> to use the <em>homeTpl</em> template instead of the inline HTML:</p>
+
+    <p><code>
+ function renderHomeView() {
+     $('body').html(homeTpl());
+     $('.search-key').on('keyup', findByName);
+ }
+</code></p>
+  </li>
+  <li>
+    <p>Modify <strong>findByName()</strong> to use the sessionListTpl template instead of the inline HTML:</p>
+
+    <p><code>
+ function findByName() {
+     service.findByName($('.search-key').val()).done(function (sessions) {
+         $('.content').html(sessionListTpl(sessions));
+     });
+ }
+</code></p>
+  </li>
+  <li>
+    <p>Test the application.</p>
+
+    <p><img src="images/handlebars-pg.png" alt="" /></p>
+  </li>
+</ol>
+
+<div class="row" style="margin-top:40px;">
+<div class="col-sm-12">
+<a href="single-page-app.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> 
+Previous</a>
+<a href="creating-view-classes.html" class="btn btn-default pull-right">Next <i class="glyphicon 
+glyphicon-chevron-right"></i></a>
+</div>
+</div>
+
+
+
+
+        <!--<div class="row" style="margin-top: 30px;">-->
+            <!--<div class="col-xs-12">-->
+                <!--<div id="disqus_thread"></div>-->
+                <!--<script type="text/javascript">-->
+                    <!--/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */-->
+                    <!--var disqus_shortname = 'salesforcedeveloperworkshop'; // required: replace example with your forum shortname-->
+
+                    <!--/* * * DON'T EDIT BELOW THIS LINE * * */-->
+                    <!--(function() {-->
+                        <!--var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;-->
+                        <!--dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';-->
+                        <!--(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);-->
+                    <!--})();-->
+                <!--</script>-->
+                <!--<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>-->
+                <!--<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>-->
+            <!--</div>-->
+        <!--</div>-->
+
+
+    </div>
+
+    <div class="col-xs-12 col-sm-4 right-nav">
+
+        <div class="panel panel-default">
+            <!-- Default panel contents -->
+            <div class="panel-heading" style="font-variant:small-caps;font-size: 18px;">modules</div>
+            <ol class="list-group">
+                <li><a href="create-project.html">Creating a PhoneGap Project</a></li>
+                <li><a href="build-project.html">Building a PhoneGap Project</a></li>
+                <li><a href="setup-files.html">Setting Up the Workshop Files</a></li>
+                <li><a href="data-storage.html">Choosing a Data Storage Strategy</a></li>
+                <li><a href="native-notification.html">Using Native Notification</a></li>
+                <li><a href="avoid-300ms-delay.html">Avoiding the 300ms Click Delay</a></li>
+                <li><a href="single-page-app.html">Setting Up a Single-Page Application</a></li>
+                <li><a href="handlebars-templates.html">Using Handlebars Templates</a></li>
+                <li><a href="creating-view-classes.html">Creating View Classes</a></li>
+                <li><a href="routing.html">Implementing View Routing</a></li>
+                <li><a href="hardware-acceleration.html">Using Hardware Acceleration</a></li>
+                <li><a href="add-to-calendar.html">Add Native Add to Calendar Feature</a></li>
+                <li><a href="share.html">Adding Native Share Feature</a></li>
+                <li><a href="polish.html">Adding Polish</a></li>
+            </ol>
+            <p></p>
+        </div>
+
+<a href="https://twitter.com/share" class="twitter-share-button" data-size="large"
+   data-url="http://hollyschinsky.github.io/phonegap-workshop"
+   data-text="PhoneGap Tutorial #Cordova #PhoneGap">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+<a href="https://twitter.com/devgirlfl" class="twitter-follow-button" data-show-count="true"
+   data-size="large" data-lang="en">Follow
+    @devgirlfl</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+    </div>
+
+</div>
+
+</div>
+
+<div class="container">
+    <div id="footer">
+        <a href="http://devgirl.org"><p class="text-muted">Holly Schinsky</p></a>
+    </div>    <!-- Site footer -->
+</div>
+
+
+<script src="lib/jquery.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+</body>
+</html>

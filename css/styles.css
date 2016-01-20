@@ -1,0 +1,145 @@
+
+.frame {
+    position: relative;
+    display: inline-block;
+    background: url(../images/sprite.png?v=1.0.3) -350px -880px no-repeat;
+    width: 444px;
+
+}
+h1 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+blockquote {
+    font-size: inherit;
+    line-height: inherit;
+}
+
+.btn-lg {
+    border-radius: 2px;
+    background-color: #049EC4;
+    /*background: #2d3033;*/
+    color: #FFFFFF !important;
+    border-color: #FFFFFF;
+}
+
+.jumbotron {
+    margin-top: -20px;
+    padding-bottom: 30px;
+    padding-top: 30px;
+    /*background-color: #049EC4;*/
+    background-color: #2d3033;
+    /*background-color: #ec0236;*/
+    color: rgb(236, 236, 236);
+}
+
+.jumbotron h1 {
+    font-size: 50px;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.jumbotron a:hover {
+    border-color: #cccccc;
+}
+
+
+.right-nav {
+    padding-top: 20px;
+}
+
+.right-nav ol {
+    margin: 10px 10px 0 40px;
+}
+
+.right-nav ol > li {
+    padding: 4px 0;
+}
+
+.list-group-item {
+}
+
+h3 {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+li > ul {
+    margin-bottom: 20px;
+}
+
+li > ul > li {
+    margin-bottom: 10px;
+}
+
+#footer {
+    margin-top: 40px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-top: solid 1px #eee;
+}
+
+blockquote {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    /*color: #31708f;
+    background-color: #d9edf7;
+    border-color: #bce8f1;*/
+    color: #000000;
+    /*color: rgb(236, 236, 236);*/
+    background-color: #fff7ec;
+    border-color: rgb(210, 209, 210);
+}
+
+h2 {
+    font-size: 24px;
+    border-bottom: solid 1px #EEE;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    margin-top: 40px;
+}
+
+.phonegapDark {
+    background: #2d3033;
+}
+.phonegapBase {
+    border-bottom-color: rgb(236, 236, 236);
+}
+.phonegapGrey {
+    border-bottom-color: rgb(210, 209, 210);
+}
+.extraContent {
+    padding-left: 10px;
+}
+.screenshot {
+    max-width: 50%;
+    max-height: 50%;
+}
+.screenshot-lg {
+    max-width: 70%;
+    max-height: 70%;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+.screenshot-lg-center {
+     max-width: 40%;
+     max-height: 40%;
+     align-content: center;
+     margin-left: auto;
+     margin-right: auto;
+     display: block;
+ }
+.screenshot2 {
+    max-width: 90%;
+    max-height: 90%;
+    align-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}

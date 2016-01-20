@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+
+    <link href="lib/ratchet/css/ratchet.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/pageslider.css" rel="stylesheet">
+    <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<script id="home-tpl" type="text/template">
+    <header class="bar bar-nav">
+        <h1 class="title">Pocket Guide - Amsterdam</h1>
+
+        <div class="infoBtn"><a class="icon icon-info pull-right"></a></div>
+    </header>
+
+    <div class="bar bar-standard bar-header-secondary">
+        <input class='search-key' type="search"/>
+    </div>
+    <div class="content"></div>
+</script>
+
+<script id="list-tpl" type="text/template">
+    <ul class="table-view">
+        {{#each this}}
+        <li class="table-view-cell media">
+            <a href="#items/{{ id }}">
+                <img class="media-object pull-left" src="img/{{pic}}">
+
+                <div class="media-body">
+                    {{name}}
+                    <p>{{category}}</p>
+                    {{#for 0 this.rating 1}}
+                    <span class="rating">&#9733;</span>
+                    {{/for}}
+                </div>
+            </a>
+        </li>
+        {{/each}}
+    </ul>
+</script>
+
+<script id="item-tpl" type="text/template">
+    <header class="bar bar-nav">
+        <a class="btn btn-link btn-nav pull-left" href="#">
+            <span class="icon icon-left-nav"></span>
+        </a>
+
+        <h1 class="title">Overview</h1>
+    </header>
+
+    <nav class="bar bar-tab tabbar">
+        <div class="favoriteBtn tab-item">
+            <span class="icon fa fa-heart"></span>
+            <span class="tab-label">Favorite</span>
+        </div>
+        <div class="mapBtn tab-item">
+            <span class="icon fa fa-map-marker"></span>
+            <span class="tab-label">Map it</span>
+        </div>
+        <div class="shareBtn tab-item">
+            <span class="icon icon-share"></span>
+            <span class="tab-label">Share</span>
+        </div>
+    </nav>
+
+    <div class="content">
+        <div class="card">
+            <div>
+                <ul class="table-view">
+                    <li class="table-view-cell media">
+                        <img class="media-object pull-left" src="img/{{pic}}">
+
+                        <div class="media-body">
+                            {{name}}
+                            <p>{{category}}</p>
+                            {{#for 0 this.rating 1}}
+                            <span class="rating">&#9733;</span>
+                            {{/for}}
+                        </div>
+                    </li>
+                    <li>
+                        <div class="content-padded"> {{description}}</div>
+                    </li>
+                    <li>
+                        <div id="map_canvas"></div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="table-view-divider">REVIEWS</div>
+                            <ul class="table-view">
+                                {{#each reviews}}
+                                <li><p class="pad">"{{this}}"</p></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+</script>
+
+<!-- Google Maps API - sign up for key at -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA_BjX-8zj5FNULQ3jerzHSTCCdb0OqZTI"></script>
+
+<script src="cordova.js"></script>
+<script src="lib/jquery.js"></script>
+<script src="lib/fastclick.js"></script>
+<script src="lib/handlebars.js"></script>
+<script src="lib/pageslider.js"></script>
+<script src="lib/router.js"></script>
+<script src="js/DataService.js"></script>
+<script src="js/ListView.js"></script>
+<script src="js/HomeView.js"></script>
+<script src="js/ItemView.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
