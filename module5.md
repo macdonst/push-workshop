@@ -40,7 +40,7 @@ then determine the distance to the selected list item.
 ### With Google Maps Developer Key (only if you created one in setup and can use map features)
 1. While still within the `mapIt` function in **www/js/ItemView.js**, add the following code  
 block into the `tilesloaded` event handler, right after the marker code and prior to the `tilesloaded` event listener removal. 
-See the [solutions/www5/Item.js solution code](https://github.com/hollyschinsky/pocket-guide/blob/master/solutions/www5/js/ItemView.js) if you have any issues. 
+See the [solutions/www5/Item.js solution code](https://github.com/macdonst/pocket-guide/blob/master/solutions/www5/js/ItemView.js) if you have any issues. 
                 
         navigator.geolocation.getCurrentPosition(function (position) {
             var here = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);

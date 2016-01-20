@@ -53,7 +53,7 @@ Single page applications are popular and considered the best approach for hybrid
                 });
             };
 
-> See [this workshop](http://hollyschinsky.github.io/phonegap-workshop/) for a better understanding of how this architecture was put together. 
+> See [this workshop](http://macdonst.github.io/phonegap-workshop/) for a better understanding of how this architecture was put together. 
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">

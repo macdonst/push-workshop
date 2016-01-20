@@ -37,8 +37,8 @@ In this workshop you will learn how to create a simple mobile application using 
 >A mobile device **is** a requirement for this tutorial. The iOS simulator does not support push notifications and the less said about the Android emulator the better.
 
 ## Useful Resources
-1. [GCM Project Creation](http://hollyschinsky.github.io/phonegap-workshop) - a similar app with a workshop that goes step by step creating the routing, templates and views to understand Single Page Architecture.
-2. [Apple Push Configuration](http://hollyschinsky.github.io/ConferenceTracker) - a conference app built with Ionic/AngularJS with some more advanced features
+1. [GCM Project Creation](http://macdonst.github.io/phonegap-workshop) - a similar app with a workshop that goes step by step creating the routing, templates and views to understand Single Page Architecture.
+2. [Apple Push Configuration](http://macdonst.github.io/ConferenceTracker) - a conference app built with Ionic/AngularJS with some more advanced features
 
 ## Issues/Feedback
 
