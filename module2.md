@@ -4,39 +4,60 @@ title: Module 2&#58; Obtaining a Registration ID
 ---
 
 ### Overview
-A default JavaScript alert gives away the fact that your application is not native. In this section, we set up the basic infrastructure to display
-native alerts when the application is running on a device, and simply fall back to default JavaScript alerts when it is running in the browser.
-
-   <img class="screenshot-lg" src="images/not-native-alert.jpg"/>
+In order for your device to receive push notifications you will need to receive a registration ID from the remote push service be it Google Cloud Messaging (GCM) or Apple Push Notification Service (APNS). We'll learn how to register for push and report that registration ID back to our application server.
 
 ## Steps
-1. Notice the code behind the button pressed to illustrate the issue above. It's located in the **www/js/HomeView.js** file and is a simple alert:
+1. Initialize the PushNotification plugin and register an event handler for a `registration` event. Open the **www/js/index.js** file
+and add the following into the `deviceready` handling section, **Note:** if you are testing with Android you will need to modify the `senderID` property to match yours.
 
-        alert("PhoneGap Day Workshop App version 1.0");
+        app.push = PushNotification.init({
+            "android": {
+                "senderID": "Your GCM ID"
+            },
+            "ios": {
+              "sound": true,
+              "vibration": true,
+              "badge": true
+            },
+            "windows": {}
+        });
 
-1. Handle all alerts globally with some code that will override it to use the native plugin in one piece of code. Open the **www/js/app.js** file
-and add the following into the `deviceready` handling section:        
+        app.push.on('registration', function(data) {
+            console.log("registration event: " + data.registrationId);
+            document.getElementById("regId").innerHTML = data.registrationId;
+            var oldRegId = localStorage.getItem('registrationId');
+            if (oldRegId !== data.registrationId) {
+                // Save new registration ID
+                localStorage.setItem('registrationId', data.registrationId);
+                // Post registrationId to your app server as the value has changed
+            }
+        });
 
+        app.push.on('error', function(e) {
+            console.log("push error = " + e.message);
+        });
 
-        if (navigator.notification) {     
-            window.alert = function (message) {         
-                navigator.notification.alert( message, // message             
-                null,                                 // callback             
-                "Pocket Guide",                       // title             
-                'OK'                                  // buttonName             
-            ); 
-            };
-         } else console.log("Notification plugin not found or not supported.");
+2. Run the app using the PhoneGap CLI:
 
-2. Now test out the info button again once you have added the above code and it should look like a native alert:   
+            $ phonegap run ios
+            $ phonegap run ios --device
+            $ phonegap run android             
+            $ phonegap run android --device               
 
-     <img class="screenshot-lg" src="images/native-alert.jpg"/>
+and once the device receives a registration event the application will look a like this:
+
+<img class="screenshot-lg" src="images/push1.png"/>
+
+## Useful Resources
+1. [Apache Cordova and Remote Debugging on Android](http://geeklearning.io/apache-cordova-and-remote-debugging-on-android/) - a quick tutorial on how to setup your phone to allow remote debugging with Chrome Web Inspector.
+2. [Debugging PhoneGap Apps with Safari's Web Inspector](http://phonegap-tips.com/articles/debugging-ios-phonegap-apps-with-safaris-web-inspector.html) - a quick tutorial on how to setup your phone to allow remote debugging with Safari Web Inspector.
+
 
 ### Dependencies
 
-   [Cordova Dialogs Core Plugin](https://github.com/apache/cordova-plugin-dialogs)
+   [PhoneGap Push Plugin](https://github.com/phonegap/phonegap-plugin-push)
 
-    $ phonegap plugin add cordova-plugin-dialogs
+    $ phonegap plugin add phonegap-plugin-push
 
    >You won't need to specifically add it for this workshop if you used the project repo **config.xml** or if you are testing the app with the PhoneGap Developer App
    since it will automatically be added. If you are creating the project from scratch and using the CLI locally then use the command above.
