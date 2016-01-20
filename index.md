@@ -4,9 +4,7 @@ title: PhoneGap Day US Push Workshop
 ---
 
 ## What You Will Build
-In this workshop you will learn how to create a simple mobile Tour Guide application using PhoneGap with HTML, JavaScript and CSS. Some best
-practices and performance techniques will be taught and you will be introduced to useful plugins to add additional functionality and enhance
-the app to provide a more native experience.
+In this workshop you will learn how to create a simple mobile application using PhoneGap with HTML, JavaScript and CSS. We'll go over a the ways to handle incoming push notifications to provide a native experience.
 
 <img class="screenshot" src="images/flow1.jpg"/>
 <img class="screenshot" src="images/flow2-detail-view.jpg"/>
@@ -22,13 +20,13 @@ the app to provide a more native experience.
 
 ### Android Pre-requisites
 
-Google Cloud Messaging Project ID
-Google Cloud Messaging API Key for above Project ID (need for server)
+- Google Cloud Messaging Project ID
+- Google Cloud Messaging API Key for above Project ID (need for server)
 
 ### iOS Pre-requisites
 
-App ID configured for Push Notifications on Apple Developer Portal
-SSL Certificate and private key (need for server)
+- App ID configured for Push Notifications on Apple Developer Portal
+- SSL Certificate and private key (need for server)
 
 ## Requirements
 
