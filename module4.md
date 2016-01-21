@@ -9,35 +9,36 @@ Now that we have an app that is able to receive push notifications we have to ha
 ## Steps
 1. In the **server** directory run:
 
-            npm install
+        npm install
 
 This will install the necessary node packages in order to send push notifications to APNS or GCM.
 
 2. If you are using an Android device open the **server/gcmService.js** file. You will need to modify the following two lines with your API key and device ID.
 
-            // Replace these with your own values.
-            var apiKey = "Project API Key";
-            var deviceID = "Device's Registration ID"
+        // Replace these with your own values.
+        var apiKey = "Project API Key";
+        var deviceID = "Device's Registration ID"
 
 or if you are using an iOS device open the **server/apnService.js** file. You will need to modify the following three lines with the paths to your certificate files and the device ID.
 
-            // Replace these with your own values.
-            var cert = "/path/to/cert.pem";
-            var key = "/path/to/key.pem";
-            var deviceID = "Device's Registration ID";
+        // Replace these with your own values.
+        var cert = "/path/to/cert.pem";
+        var key = "/path/to/key.pem";
+        var deviceID = "Device's Registration ID";
 
 3. Now we are ready to send a push notification to our app. If you are on Android device you will run the following command to send your test push:
 
-            node gcmService.js
+        node gcmService.js
 
 <img class="screenshot" src="images/push2.png"/>
 <img class="screenshot" src="images/push3.png"/>
 
 If you are on a iOS device you will run the following command to send your test push:
 
-            node apnService.js
+        node apnService.js
 
->Add in iOS screen shots.
+<img class="screenshot" src="images/push2-ios.png"/>
+<img class="screenshot" src="images/push3-ios.png"/>
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">

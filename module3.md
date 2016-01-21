@@ -9,22 +9,22 @@ Now that we have a registration ID we are now ready to receive our push notifica
 ## Steps
 1. Open **www/js/index.js** and add the following code after the push error handler:
 
-            app.push.on('notification', function(data) {
-                console.log('notification event');
-                var cards = document.getElementById("cards");
-                var push = '<div class="row">' +
-                  '<div class="col s12 m6">' +
-                  '  <div class="card darken-1">' +
-                  '    <div class="card-content black-text">' +
-                  '      <span class="card-title black-text">' + data.title + '</span>' +
-                  '      <p>' + data.message + '</p>' +
-                  '      <p>' + data.additionalData.foreground + '</p>' +
-                  '    </div>' +
-                  '  </div>' +
-                  ' </div>' +
-                  '</div>';
-                cards.innerHTML += push;
-            });
+        app.push.on('notification', function(data) {
+            console.log('notification event');
+            var cards = document.getElementById("cards");
+            var push = '<div class="row">' +
+              '<div class="col s12 m6">' +
+              '  <div class="card darken-1">' +
+              '    <div class="card-content black-text">' +
+              '      <span class="card-title black-text">' + data.title + '</span>' +
+              '      <p>' + data.message + '</p>' +
+              '      <p>' + data.additionalData.foreground + '</p>' +
+              '    </div>' +
+              '  </div>' +
+              ' </div>' +
+              '</div>';
+            cards.innerHTML += push;
+        });
 
 
 Now when a notification message is received while the app is the foreground your UI will automatically update.
