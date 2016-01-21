@@ -1,0 +1,7 @@
+{
+  "name": "Push-Test",
+  "dependencies": {
+    "node-gcm": "^0.12.1",
+    "apn": "^1.7.5"
+  }
+}
