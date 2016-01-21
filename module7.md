@@ -1,8 +1,8 @@
 ---
 layout: module
-title: Module 12&#58; Add Native Share Feature
+title: Module 7&#58; Handing URL re-direction
 ---
-In this lesson we'll learn how to share a destination's information through the device's native sharing options. 
+In this lesson we'll learn how to share a destination's information through the device's native sharing options.
 
 ### Steps
 
@@ -34,34 +34,32 @@ In this lesson we'll learn how to share a destination's information through the 
             }
             else alert("Social sharing plugin not found or not supported.");
         }
-    
+
 
 1. Run the application again and click the share button to ensure you see the following:
 
     <img class="screensho-lgt" src="images/flow5-social-share.jpg"/>
-    
+
 >The options shown here will depend on your particular devices' native sharing options.
 
 ### Dependencies
- 
+
     - [Toast 3rd Party Plugin](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin)
-  
+
      $ phonegap plugin add nl.x-services.plugins.socialsharing
-    
-    
- > The Social Sharing plugin is already included in the config.xml from the repo and will be added automatically if you are using it with the 
+
+
+ > The Social Sharing plugin is already included in the config.xml from the repo and will be added automatically if you are using it with the
   CLI locally.  If you're using the PhoneGap Developer App to preview your app however, this will not work since it is a 3rd party plugin.
 
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">
-<a href="add-to-calendar.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> 
+<a href="add-to-calendar.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>
 Previous</a>
-<a href="statusbar.html" class="btn btn-default pull-right">Next <i class="glyphicon 
+<a href="statusbar.html" class="btn btn-default pull-right">Next <i class="glyphicon
 glyphicon-chevron-right"></i></a>
 
 
 </div>
 </div>
-
-
