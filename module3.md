@@ -24,6 +24,8 @@ Now that we have a registration ID we are now ready to receive our push notifica
                   ' </div>' +
                   '</div>';
                 cards.innerHTML += push;
+            });
+
 
 Now when a notification message is received while the app is the foreground your UI will automatically update.
 
