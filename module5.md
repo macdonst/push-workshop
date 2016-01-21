@@ -1,100 +1,87 @@
 ---
 layout: module
-title: Module 5&#58; Enhancing Maps with Offline Handling and Geolocation
+title: Module 5&#58; Background Notifications
 ---
 
 ### Overview
-In this lesson we'll use a couple more core PhoneGap plugins to enhance our Google Maps feature of the application. The current version of the app
-to this point will display a map and mark the location using methods from the [Google Maps JavaScript v3 API](https://developers.google.com/maps/documentation/javascript/tutorial).  
-
-### Part 1: Handle Offline
-This application is dependent on a network connection currently for the Google Maps API calls (evident by the inclusion of the URL in the script tag in the index.html).
-However we can add some handling to detect an offline situation using the Cordova Network Information plugin and only call to map it when there's a connection.
+In this lesson we'll learn how to have our notification handler run when the app is not in the foreground without user interaction. As we mentioned in lesson 3 the notification handler is only run when the application is in the foreground or if the user taps the received notification but there is a way to signal your app to run code in the background. This is a very powerful technique which allows you to keep your app up to date.
 
 ## Steps
-1. (Optional) Test out the current handling by shutting off your network access and running the app.
+1. Open a remote debugging session with your application (uses the resources from lesson 2).
 
-2. In **www/js/ItemView.js**, add the following `if` statement as the first line in the `mapIt` function around the Google Maps existing code currently there, with
-an else alert to notify the user they are offline in that event:
+   <img class="screenshot" src="images/debug-chrome.png"/>
+   <img class="screenshot" src="images/debug-safari.png"/>
 
-        if (navigator.connection && navigator.connection.type == Connection.NONE) {
-            alert("Mapping requires a network connection but we have detected you are currently offline. ");
-        }
-        else {
-            // Google maps code here 
-            // var there = new google.maps.LatLng(place.latitude, place.longitude);        
-            ...
-        }
+2. With your app in the foreground send yourself a push message using the script we worked on in lesson 4. You will notice that besides the UI of the app being updated that in the console of our debugger you will see the following output:
 
->This is simply checking to see if there's a connection and calling the mapping APIs if there is, otherwise just throwing an alert for 
-lesson purposes. However there are events in this plugin you can use to handle when the user comes back online after being offline and vice 
-versa as well as details on the specific type of connection they may have. See the 
-[plugin docs](https://github.com/apache/cordova-plugin-network-information) for details. 
+        notification event
 
-### Part 2: Get Location and Calculate Distance
-In this part we'll use the [Cordova Geolocation](https://github.com/apache/cordova-plugin-geolocation) plugin to figure out our location to 
-then determine the distance to the selected list item.
+3. Now put your app in the background and send another push message. You should see the message arrive in the shade area but notice there was no additional logs in the console of your debugger.
 
-## Steps
+   <img class="screenshot" src="images/push2.png"/>
+   <img class="screenshot" src="images/push2-ios.png"/>
 
-### With Google Maps Developer Key (only if you created one in setup and can use map features)
-1. While still within the `mapIt` function in **www/js/ItemView.js**, add the following code  
-block into the `tilesloaded` event handler, right after the marker code and prior to the `tilesloaded` event listener removal. 
-See the [solutions/www5/Item.js solution code](https://github.com/macdonst/push-workshop/blob/master/solutions/www5/js/ItemView.js) if you have any issues. 
-                
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var here = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+4. Click on the notification, your app should open, the UI will be updated and you'll see a new line in the console of the debugger.
 
-            // Use Google Maps Geometry library to compute distance between two points and produce a message
-            var distance = (google.maps.geometry.spherical.computeDistanceBetween(here, there) / 1000).toFixed(2);
-            var msg = "You are " + distance + "KM away from here";
+   > But what we really want is for the notification event to be delivered to our application even when it is in the background
 
-            if (window.cordova && window.plugins && window.plugins.toast)
-                window.plugins.toast.showShortCenter(msg);
-            else alert(msg);
+5. Open **www/js/index.js** and add replace the current push notification handler:
 
-        },function(error){console.log("Error retrieving location " + error.code + " " + error.message)});
-     
+        app.push.on('notification', function(data) {
+            console.log('notification event');
+            var cards = document.getElementById("cards");
+            var push = '<div class="row">' +
+              '<div class="col s12 m6">' +
+              '  <div class="card darken-1">' +
+              '    <div class="card-content black-text">' +
+              '      <span class="card-title black-text">' + data.title + '</span>' +
+              '      <p>' + data.message + '</p>' +
+              '      <p>' + data.additionalData.foreground + '</p>' +
+              '    </div>' +
+              '  </div>' +
+              ' </div>' +
+              '</div>';
+            cards.innerHTML += push;
 
-   >The Google Maps API details and explanation are beyond the scope of this workshop, however you can find everything you need to know 
-   about the API's and code used in this application [here](https://developers.google.com/maps/documentation/javascript/tutorial). Note that for
-   the distance calculation, you need to ensure the geometry parameter is included on the URL with your developer key. 
-   &lt;script src="https://maps.googleapis.com/maps/api/js?key=your-dev-key-here&libraries=geometry"&gt;
+            app.push.finish(function() {
+                console.log('success');
+            }, function() {
+                console.log('error');
+            });
+        });
 
-2. The current location will be discovered and then used with a Google Maps Geometry function to compute the distance using a haversine formula. 
-The result is then put into a message and displayed in either an alert or using a toast notification via a [3rd party plugin](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin)
- that provides a non-blocking informational toast notification and is a nicer solution in this case.
+   > Strictly speaking the call to `finish` is only required on iOS. It is a no-op on other platforms. The reason we need to do this on iOS is the OS only provides you with 30 seconds of background processing and we need to tell the OS we are done. Failure to do this may cause the OS to kill your app for mis-behaving.
 
-    <img class="screenshot-lg" src="images/flow3-map-details.jpg"/>
+6. Now we'll need to modify our push scripts to inform the device we want to do some background processing.
 
-### Without Google Maps Developer Key
-1. If you did not create a google maps key then you can still do this lesson and get the current location using the Geolocation plugin. Add the following code into the
-mapIt function outside of the Google maps code. Inserting it into the very top of the function might be a good place for trying out this feature. 
+   - **For Android**            
+     1. Open **server/gcmService.js**
+     2. After the lines that add the title and body to your notification add the following line:
 
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var here = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            var msg = "Your current latitude is: " + position.coords.latitude +" and current longitude is " + position.coords.longitude;
+            message.addData('content-available', '1');
 
-            if (window.cordova && window.plugins && window.plugins.toast)
-                window.plugins.toast.showShortCenter(msg);
-            else alert(msg);
+     3. Run `node gcmServer.js`
 
-        },function(error){console.log("Error retrieving location " + error.code + " " + error.message)});
 
-### Dependencies
+   - **For iOS**            
+     1. Open **server/apnsService.js**
+     2. After the line that sets `note.alert` add the following line:
 
-   - [Cordova Network Information Core Plugin](https://github.com/apache/cordova-plugin-network-information)
-   - [Cordova Geolocation Core Plugin](https://github.com/apache/cordova-plugin-geolocation)
-   - [Toast 3rd Party Plugin](https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin)
- 
-        
-        `$ phonegap plugin add cordova-plugin-network-information`
-        `$ phonegap plugin add cordova-plugin-geolocation`
-        `$ phonegap plugin add nl.x-services.plugins.toast`
+            note.contentAvailable = 1;
 
-   
-> All of the plugins used in this module are included in the config.xml in the repo and will be added automatically if you are using it with the CLI locally.  If you're using the PhoneGap Developer App to preview your app however, you will only have the core plugins used here (network-information and geolocation), but not the toast notification plugin.
- 
+     3. Run `node apnsServer.js`
+
+7. As well as the notification appearing in your shade you should see the line:
+
+        notification event
+
+   in the debugger console.
+
+8. Now start your app, not by clicking the push notification, instead launch the app from the app drawer. When the app starts up you'll notice the UI has already been updated with the data from the new push.
+
+## Discussion
+
+What we've demonstrated here is not very exciting but you can think of other uses for this background processing. Especially when you consider omitting the `title` and `body` elements from the push. If you do that the notification will not be displayed in the shade, effectively it will be a silent notification. You can use these silent background notifications to tell the app to go download some new content or in more advance cases in conjunction with [phonegap-plugin-contentsync](https://github.com/phonegap/phonegap-plugin-contentsync) you can update your app without user (or app store) interaction.
 
 <div class="row" style="margin-top:40px;">
     <div class="col-sm-12">

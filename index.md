@@ -12,7 +12,7 @@ In this workshop you will learn how to create a simple mobile application using 
 
 ## What You Will Learn
 
-- How to handle specific notification types such as foreground push, background push, action buttons, redirecting to a specifc page in your app.
+- How to handle specific notification types such as foreground push, background push, action buttons, redirecting to a specific page in your app.
 
 - How to use several PhoneGap APIs via plugins
 
