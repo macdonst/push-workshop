@@ -11,7 +11,7 @@ Now that we have an app that is able to receive push notifications we have to ha
 
         npm install
 
-This will install the necessary node packages in order to send push notifications to APNS or GCM.
+   This will install the necessary node packages in order to send push notifications to APNS or GCM.
 
 2. If you are using an Android device open the **server/gcmService.js** file. You will need to modify the following two lines with your API key and device ID.
 
@@ -19,7 +19,7 @@ This will install the necessary node packages in order to send push notification
         var apiKey = "Project API Key";
         var deviceID = "Device's Registration ID"
 
-or if you are using an iOS device open the **server/apnService.js** file. You will need to modify the following three lines with the paths to your certificate files and the device ID.
+   or if you are using an iOS device open the **server/apnService.js** file. You will need to modify the following three lines with the paths to your certificate files and the device ID.
 
         // Replace these with your own values.
         var cert = "/path/to/cert.pem";
@@ -33,7 +33,7 @@ or if you are using an iOS device open the **server/apnService.js** file. You wi
 <img class="screenshot" src="images/push2.png"/>
 <img class="screenshot" src="images/push3.png"/>
 
-If you are on a iOS device you will run the following command to send your test push:
+   If you are on a iOS device you will run the following command to send your test push:
 
         node apnService.js
 
