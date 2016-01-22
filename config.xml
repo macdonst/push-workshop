@@ -26,4 +26,5 @@
     <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
     <plugin name="phonegap-plugin-push" spec="~1.5.3" />
     <plugin name="cordova-plugin-console" spec="~1.0.2" />
+    <plugin name="cordova-plugin-dialogs" spec="~1.2.0" />
 </widget>

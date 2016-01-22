@@ -30,7 +30,7 @@ In this lesson we'll learn how to launch to a specific location in your applicat
          }
         });
 
-        > Notice that the `url` property is added to the `additionalData` object. If you send a property that doesn't conform to `title`, `message`, `count` or `sound` it will be placed in the `additionalData` object.
+   > Notice that the `url` property is added to the `additionalData` object. If you send a property that doesn't conform to `title`, `message`, `count` or `sound` it will be placed in the `additionalData` object.
 
 2. Put your app in the background by pressing the home button.
 
@@ -49,7 +49,7 @@ In this lesson we'll learn how to launch to a specific location in your applicat
      1. Open **server/apnsService.js**
      2. After the line that sets `note.alert` add the following line:
 
-            note.cats = 'cats';
+            note.payload = {'url': 'cats'};
 
      3. Run `node apnsServer.js`
 
@@ -103,7 +103,7 @@ In this lesson we'll learn how to launch to a specific location in your applicat
          }
         });
 
-        > We are using another property that is added to the `additionalData` object called `foreground`. You don't have to explicitly send this property from your push service. The plugin itself will set `foreground` to `true` when the notification is received while the user is in your app and `false` in the app is in the background. This allows you to program different behaviors depending on how the notification was received.
+   > We are using another property that is added to the `additionalData` object called `foreground`. You don't have to explicitly send this property from your push service. The plugin itself will set `foreground` to `true` when the notification is received while the user is in your app and `false` in the app is in the background. This allows you to program different behaviors depending on how the notification was received.
 
 8. While leaving the app in the foreground resend a push notification to the app using the method we talked about in step 3. You will now see the confirmation dialog pop up:
 
@@ -111,6 +111,14 @@ In this lesson we'll learn how to launch to a specific location in your applicat
     <img class="screenshot" src="images/push5-ios.png"/>
 
 9. Clicking on the `Yes` button once again brings you to the yawning cat.
+
+### Dependencies
+
+   [Cordova Dialogs Plugin](https://github.com/apache/cordova-plugin-dialogs)
+
+    $ phonegap plugin add cordova-plugin-dialogs
+
+   >You won't need to specifically add it for this workshop if you used the project repo **config.xml**. If you are creating the project from scratch and using the CLI locally then use the command above.
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">

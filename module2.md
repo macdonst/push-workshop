@@ -59,8 +59,7 @@ and once the device receives a registration event the application will look a li
 
     $ phonegap plugin add phonegap-plugin-push
 
-   >You won't need to specifically add it for this workshop if you used the project repo **config.xml** or if you are testing the app with the PhoneGap Developer App
-   since it will automatically be added. If you are creating the project from scratch and using the CLI locally then use the command above.
+   >You won't need to specifically add it for this workshop if you used the project repo **config.xml**. If you are creating the project from scratch and using the CLI locally then use the command above.
 
 
 
