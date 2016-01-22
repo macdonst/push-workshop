@@ -2,56 +2,115 @@
 layout: module
 title: Module 7&#58; Handing URL re-direction
 ---
-In this lesson we'll learn how to share a destination's information through the device's native sharing options.
+### Overview
+In this lesson we'll learn how to launch to a specific location in your application based on data from the incoming push notification.
 
 ### Steps
 
-1. In **index.html**, add the following tab to the tab bar in the *item-tpl* template:
+1. Open **www/js/index.js** and add replace the current push notification handler:
 
-    ```
-    <div class="shareBtn tab-item">
-        <span class="icon icon-share"></span>
-        <span class="tab-label">Share</span>
-    </div>
-    ```
+        app.push.on('notification', function(data) {
+         console.log('notification event');
+         if (data.additionalData.url) {
+           app.toggle();
+         } else {
+           var cards = document.getElementById("cards");
+           var push = '<div class="row">' +
+             '<div class="col s12 m6">' +
+             '  <div class="card darken-1">' +
+             '    <div class="card-content black-text">' +
+             '      <span class="card-title black-text">' + data.title + '</span>' +
+             '      <p>' + data.message + '</p>' +
+             '      <p>' + data.additionalData.foreground + '</p>' +
+             '    </div>' +
+             '  </div>' +
+             ' </div>' +
+             '</div>';
+           cards.innerHTML += push;
+         }
+        });
 
-1. In the **initialize()** function of **ItemView.js**, register an event listener for the click event of the *share* button.
+        > Notice that the `url` property is added to the `additionalData` object. If you send a property that doesn't conform to `title`, `message`, `count` or `sound` it will be placed in the `additionalData` object.
 
-        this.$el.on('click', '.shareBtn', this.share);    
+2. Put your app in the background by pressing the home button.
 
-1. While in **ItemView.js**, define the `share` event handler as follows:
+3. Now we'll need to modify our push scripts to include the url we want to show in our app.
 
-         this.share = function(event) {
-            if (window.cordova && window.plugins && window.plugins.socialsharing) {
-                window.plugins.socialsharing.share("Hey look where I'm going next: " + place.name + ".",
-                    'My Amsterdam Trip', null, place.website,
-                    function () {
-                        console.log("Success")
-                    },
-                    function (error) {
-                        console.log("Share fail " + error)
-                    });
-            }
-            else alert("Social sharing plugin not found or not supported.");
-        }
+   - **For Android**            
+     1. Open **server/gcmService.js**
+     2. After the lines that add the title and body to your notification add the following line:
 
+            message.addData('url', 'cats');
 
-1. Run the application again and click the share button to ensure you see the following:
-
-    <img class="screensho-lgt" src="images/flow5-social-share.jpg"/>
-
->The options shown here will depend on your particular devices' native sharing options.
-
-### Dependencies
-
-    - [Toast 3rd Party Plugin](https://github.com/EddyVerbruggen/SocialSharing-PhoneGap-Plugin)
-
-     $ phonegap plugin add nl.x-services.plugins.socialsharing
+     3. Run `node gcmServer.js`
 
 
- > The Social Sharing plugin is already included in the config.xml from the repo and will be added automatically if you are using it with the
-  CLI locally.  If you're using the PhoneGap Developer App to preview your app however, this will not work since it is a 3rd party plugin.
+   - **For iOS**            
+     1. Open **server/apnsService.js**
+     2. After the line that sets `note.alert` add the following line:
 
+            note.cats = 'cats';
+
+     3. Run `node apnsServer.js`
+
+4. You should see the message arrive in the shade area just like before.
+
+    <img class="screenshot" src="images/push2.png"/>
+    <img class="screenshot" src="images/push2-ios.png"/>
+
+5. Now click on the notification and when your app opens you should see the following:
+
+    <img class="screenshot" src="images/push4.png"/>
+    <img class="screenshot" src="images/push4-ios.png"/>
+
+   That's great as we've been able to modify the logic of our application based on information contained in the push notification.
+
+6. Now press the `Close` button to make the yawning cat go away. While leaving the app in the foreground resend a push notification to the app using the method we talked about in step 3.
+
+7. That the cat came back without any warning. Let's set about fixing that. Open **www/js/index.js** and add replace the current push notification handler:
+
+        app.push.on('notification', function(data) {
+         console.log('notification event');
+         if (data.additionalData.url) {
+           if (data.additionalData.foreground) {
+             navigator.notification.confirm(
+              'Do you want to see a cat picture?',
+               function(buttonIndex) {
+                 if (buttonIndex === 1) {
+                   app.toggle();
+                 }
+               },
+              'Cat Pic',
+              ['Yes','No']
+            );
+           } else {
+             app.toggle();
+           }
+         } else {
+           var cards = document.getElementById("cards");
+           var push = '<div class="row">' +
+             '<div class="col s12 m6">' +
+             '  <div class="card darken-1">' +
+             '    <div class="card-content black-text">' +
+             '      <span class="card-title black-text">' + data.title + '</span>' +
+             '      <p>' + data.message + '</p>' +
+             '      <p>' + data.additionalData.foreground + '</p>' +
+             '    </div>' +
+             '  </div>' +
+             ' </div>' +
+             '</div>';
+           cards.innerHTML += push;
+         }
+        });
+
+        > We are using another property that is added to the `additionalData` object called `foreground`. You don't have to explicitly send this property from your push service. The plugin itself will set `foreground` to `true` when the notification is received while the user is in your app and `false` in the app is in the background. This allows you to program different behaviors depending on how the notification was received.
+
+8. While leaving the app in the foreground resend a push notification to the app using the method we talked about in step 3. You will now see the confirmation dialog pop up:
+
+    <img class="screenshot" src="images/push5.png"/>
+    <img class="screenshot" src="images/push5-ios.png"/>
+
+9. Clicking on the `Yes` button once again brings you to the yawning cat.
 
 <div class="row" style="margin-top:40px;">
 <div class="col-sm-12">

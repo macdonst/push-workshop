@@ -2,6 +2,7 @@
 layout: module
 title: Module 6&#58; Action Buttons
 ---
+### Overview
 This module will take you through a couple steps to polish the application and give you some tips on configuration settings to be aware of.     
 
 ### Status Bar Handling
