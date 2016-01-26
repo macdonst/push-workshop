@@ -3,92 +3,118 @@ layout: module
 title: Module 6&#58; Action Buttons
 ---
 ### Overview
-This module will take you through a couple steps to polish the application and give you some tips on configuration settings to be aware of.     
-
-### Status Bar Handling
-
-  In iOS7 and above the status bar overlaps the application views. As a result, the status bar text may collide with the
-  application's header text as shown in the screenshot here:
-
-  <img class="screenshot-lg" src="images/without-statusbar-plugin.jpg"/>
-
-   > The status bar plugin has been implemented to fix this. It is already included in the config.xml
-   for the application but if you need to add it, use the following: `phonegap plugin add org.apache.cordova.statusbar`
+This lesson will take you through the steps required in order to setup "action buttons" for your push notification. Action buttons are useful to provide you users with a way to easily accomplish a task directly from the push notification. The process is quite different for Android and iOS so it is worth going over in detail. For Android all you need to do is send the buttons you want to be displayed along with their callback as part of your push payload. On iOS you will need to setup all of your buttons at initialization time and then as part of your push payload let the plugin know what set of buttons you want to show.
 
 
-1. There are two options for using the Status Bar plugin to fix this issue, via configuration or programmatically.
+## Steps
+1. Open **www/js/index.js** and replace the current push notification initialization code:
 
-   In either case, you can set the *overlay* setting to false to move the app content below the status bar. There are options
-   to set the status bar background style and text/icons to match the app header colors. For this workshop we will set the
-   preferences in the **config.xml** file so they are loaded and applied sooner than device ready is run. The programmatic
-   approach is also shown:
-
-   - **Configuration (config.xml)**
-    In your **config.xml** file (in the root of your project), add the following lines:
-
-            <preference name="StatusBarOverlaysWebView" value="false" />
-            <preference name="StatusBarBackgroundColor" value="#ec4549"/>
-            <preference name="StatusBarStyle" value="lightcontent" />
-
-    - **Programatically**
-            In **www/js/app.js** and add the following code at the top of the `deviceready` handler:
-
-              if (window.StatusBar) {
-                  StatusBar.overlaysWebView(false);
-                  StatusBar.backgroundColorByHexString('#ec4549');
-                  StatusBar.styleLightContent();
+        app.push = PushNotification.init({
+            "android": {
+                "senderID": "Your GCM ID"
+            },
+            "ios": {
+              "sound": true,
+              "vibration": true,
+              "badge": true,
+              "categories": {
+                "invite": {
+                    "yes": {
+                        "callback": "app.accept", "title": "Accept",
+                        "foreground": true, "destructive": false
+                    },
+                    "no": {
+                        "callback": "app.reject", "title": "Reject",
+                        "foreground": true, "destructive": false
+                    },
+                    "maybe": {
+                        "callback": "app.maybe", "title": "Maybe",
+                        "foreground": true, "destructive": false
+                    }
+                },
+                "delete": {
+                    "yes": {
+                        "callback": "app.doDelete", "title": "Delete",
+                        "foreground": true, "destructive": true
+                    },
+                    "no": {
+                        "callback": "app.cancel", "title": "Cancel",
+                        "foreground": true, "destructive": false
+                    }
+                }
               }
-              else console.log("Status Bar plugin not found or not supported.");        
+            },
+            "windows": {}
+        });
 
-2. With one of these solutions in place and the Status Bar Plugin added, you should see the following with no overlap:
+   > You'll notice that we've added a new parameter to the iOS object of our init code called `categories`. Each category is a named object, `invite` and `delete` in this case. These names will need to match the one you send via your payload to APNS if you want the action buttons to be displayed. Each category can have up to three buttons which must be labeled `yes`, `no` and `maybe`. In turn each of these buttons has four properties, `callback` the javascript function you want to call, `title` the label for the button, `foreground` whether or not to bring your app to the foreground and `destructive` which doesn't actually do anything destructive it just colors the button red as a warning to the user that the action may be destructive.
 
-<img class="screenshot-lg" src="images/main-view.jpg"/>
+2. While still in **www/js/index.js** we'll add some callbacks to handle our button pushes. Nothing too crazy we'll just get the app to show an alert dialog. Scroll down to where the `onDeviceReady` method is closed and add the following code:
 
+        ,
+        accept: function() {
+          alert("Accepted");
+        },
+        reject: function() {
+          alert("Rejection!");
+        },
+        maybe: function() {
+          alert("Maybe, I dunno. I can't tell for sure");
+        }
 
-### Keyboard Accessory Bar
+   > Note the leading `,` is not a mistake. It's there to make sure the JS code stays valid.
 
-We can suppress the accessory keyboard that pops up with the **Done** button on it as shown in this screenshot by using a custom plugin from the Ionic Framework and then use a method to hide it:
+3. Now we'll need to modify our push scripts to inform the device we want some action buttons.
 
-<img class="screenshot-lg" src="images/search-keyboard-acc-bar.jpg"/>
+   - **For Android**            
+     1. Open **server/gcmService.js**
+     2. After the lines that add the title and body to your notification comment out the following line:
 
+            // message.addData('content-available', '1');
 
-> We can use a keyboard plugin from Ionic to hide this. This plugin is already included in the config.xml for the application but if you need to add it, use the
-   following: `phonegap plugin add cordova.ionic.keyboard`  
+     3. After the line you've just commented out add:
 
-1. To hide it, open **www/js/app.js** and add the following code to the `deviceready` handler:
+            message.addData('actions', [
+              { "icon": "accept", "title": "Accept", "callback": "app.accept"},
+              { "icon": "reject", "title": "Reject", "callback": "app.reject"},
+            ]);
 
-
-        if (cordova.plugins.Keyboard)
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-
-
-2. Now build the application again and test to see the result.
-
-<img class="screenshot-lg" src="images/search-no-keyboard-acc.jpg"/>
-
-### Turn off WebView Bounce / Overscroll Effect
-You may notice if you pull down on your app from the header bar, you will see a black space between it and the Status Bar and a
-bounce effect on iOS as shown below.
-
-<img class="screenshot-lg" src="images/disallow-overscroll.jpg"/>
-
-
-<br><br>
-You can disable this effect by setting a property in the config.xml file.
-
-1. In the **config.xml** in the root of your project, add the following property to the end of the preferences:
+     4. Run `node gcmServer.js`
 
 
-        <preference name="DisallowOverscroll" value="true" />
+     > The Android OS will look for your icons in your projects platform/android/res/drawable folders. See [Holly's excellent tutorial](http://devgirl.org/2013/11/12/three-hooks-your-cordovaphonegap-project-needs/) if you need help with that. Icons are strictly not required for this test.
+
+   - **For iOS**            
+     1. Open **server/apnsService.js**
+     2. After the line that sets `note.alert` comment out the following line:
+
+            // note.contentAvailable = 1;
+
+     3. After the line you've just commented out add:
+
+            note.category = 'invite';
+
+     4. Run `node apnsServer.js`
+
+   This should produce the following push notifications. On Android you may have to swipe down on the notification to reveal the buttons while on iOS you'll need to swipe left on the notification to reveal the buttons.
+
+   <img class="screenshot" src="images/push6.png"/>
+   <img class="screenshot" src="images/push6-ios.png"/>
+
+4. Finally click on the 'Accept' button of the push and your app will be launched and you should see the 'Accept' alert dialog.
+
+   <img class="screenshot" src="images/push7.png"/>
+   <img class="screenshot" src="images/push7-ios.png"/>
+
+   Now experiment with clicking the other buttons or the main body of the notification to get the different behaviors.
+
+<div class="row" style="margin-top:40px;">
+<div class="col-sm-12">
+<a href="add-to-calendar.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>
+Previous</a>
+<a href="statusbar.html" class="btn btn-default pull-right">Next <i class="glyphicon
+glyphicon-chevron-right"></i></a>
 
 
-2. Now build and run the application again and the webview (your app) should stay in place.
-
-### Dependencies
-- [Status Bar Plugin](https://github.com/apache/cordova-plugin-statusbar)
-
-      $ phonegap plugin add cordova-plugin-statusbar
-
-- [Ionic Keyboard Plugin](https://github.com/driftyco/ionic-plugin-keyboard)
-
-      $ phonegap plugin add com.ionic.keyboard
+</div>
+</div>
