@@ -59,7 +59,11 @@ In this lesson we'll learn how to have our notification handler run when the app
            $ phonegap run android  
            $ phonegap run android --device               
 
-7. Now we'll need to modify our push scripts to inform the device we want to do some background processing.
+7. Re-establish your debugging session.
+
+8. Now put your app into the background by pressing the home button.
+
+9. Now we'll need to modify our push scripts to inform the device we want to do some background processing.
 
    - **For Android**            
      1. Open **server/gcmService.js**
@@ -78,13 +82,13 @@ In this lesson we'll learn how to have our notification handler run when the app
 
      3. Run `node apnsServer.js`
 
-8. As well as the notification appearing in your shade you should see the line:
+10. As well as the notification appearing in your shade you should see the line:
 
         notification event
 
-   in the debugger console.
+    in the debugger console.
 
-9. Now start your app, not by clicking the push notification, instead launch the app from the app drawer. When the app starts up you'll notice the UI has already been updated with the data from the new push.
+11. Now start your app, not by clicking the push notification, instead launch the app from the app drawer. When the app starts up you'll notice the UI has already been updated with the data from the new push.
 
 ## Discussion
 
