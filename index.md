@@ -45,8 +45,6 @@ In this workshop you will learn how to create a simple mobile application using 
 - Please create an issue [here](https://github.com/macdonst/push-workshop/issues) if you run
 into any problems or if you have feedback.
 
-- You can also use the Comments section at the bottom of each module to ask a question or report a problem.
-
 - You can contact me on Twitter:
 
     <a href="https://twitter.com/macdonst" class="twitter-follow-button" data-show-count="true"

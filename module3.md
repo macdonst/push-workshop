@@ -26,15 +26,25 @@ Now that we have a registration ID we are now ready to receive our push notifica
             cards.innerHTML += push;
         });
 
+2. Run the app using the PhoneGap CLI:
+
+            $ phonegap run ios
+            $ phonegap run ios --device
+            $ phonegap run android             
+            $ phonegap run android --device               
 
 Now when a notification message is received while the app is the foreground your UI will automatically update.
 
-<img class="screenshot-lg" src="images/push3.png"/>
+<img class="screenshot" src="images/push3.png"/>
+<img class="screenshot" src="images/push3-ios.png"/>
 
 If your app is in the background then the notification will live in the shade and once your user clicks on the notification, the notification handler will be run and your UI will be updated.
 
 <img class="screenshot" src="images/push2.png"/>
+<img class="screenshot" src="images/push2-ios.png"/>
+
 <img class="screenshot" src="images/push3.png"/>
+<img class="screenshot" src="images/push3-ios.png"/>
 
 > It's very important to note that your notification handler does not **normally** run when your app is in the background. We'll discuss how to modify your app when it is in the background in a later module.
 

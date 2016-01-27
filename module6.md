@@ -3,7 +3,7 @@ layout: module
 title: Module 6&#58; Action Buttons
 ---
 ### Overview
-This lesson will take you through the steps required in order to setup "action buttons" for your push notification. Action buttons are useful to provide you users with a way to easily accomplish a task directly from the push notification. The process is quite different for Android and iOS so it is worth going over in detail. For Android all you need to do is send the buttons you want to be displayed along with their callback as part of your push payload. On iOS you will need to setup all of your buttons at initialization time and then as part of your push payload let the plugin know what set of buttons you want to show.
+This lesson will take you through the steps required in order to setup "action buttons" for your push notification. Action buttons are useful to provide your users with a way to easily accomplish a task directly from the push notification. The process is quite different for Android and iOS so it is worth going over in detail. For Android all you need to do is send the buttons you want to be displayed along with their callback as part of your push payload. On iOS you will need to setup all of your buttons at initialization time and then as part of your push payload let the plugin know what set of buttons you want to show.
 
 
 ## Steps
@@ -62,9 +62,16 @@ This lesson will take you through the steps required in order to setup "action b
           alert("Maybe, I dunno. I can't tell for sure");
         }
 
-   > Note the leading `,` is not a mistake. It's there to make sure the JS code stays valid.
+   > Note the leading `,` is not a mistake. It's there to make sure the javascript code stays valid.
 
-3. Now we'll need to modify our push scripts to inform the device we want some action buttons.
+3. Run the app using the PhoneGap CLI:
+
+          $ phonegap run ios
+          $ phonegap run ios --device
+          $ phonegap run android  
+          $ phonegap run android --device               
+
+4. Now we'll need to modify our push scripts to inform the device we want some action buttons.
 
    - **For Android**            
      1. Open **server/gcmService.js**
@@ -96,12 +103,12 @@ This lesson will take you through the steps required in order to setup "action b
 
      4. Run `node apnsServer.js`
 
-   This should produce the following push notifications. On Android you may have to swipe down on the notification to reveal the buttons while on iOS you'll need to swipe left on the notification to reveal the buttons.
+   This should produce the following push notifications. On Android you may have to swipe down on the notification to reveal the buttons while on iOS you'll need to swipe down or swipe left on the notification to reveal the buttons depending on where you are viewing the notification.
 
    <img class="screenshot" src="images/push6.png"/>
    <img class="screenshot" src="images/push6-ios.png"/>
 
-4. Finally click on the 'Accept' button of the push and your app will be launched and you should see the 'Accept' alert dialog.
+5. Finally click on the 'Accept' button of the push and your app will be launched and you should see the 'Accept' alert dialog.
 
    <img class="screenshot" src="images/push7.png"/>
    <img class="screenshot" src="images/push7-ios.png"/>
@@ -109,12 +116,9 @@ This lesson will take you through the steps required in order to setup "action b
    Now experiment with clicking the other buttons or the main body of the notification to get the different behaviors.
 
 <div class="row" style="margin-top:40px;">
-<div class="col-sm-12">
-<a href="add-to-calendar.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i>
-Previous</a>
-<a href="statusbar.html" class="btn btn-default pull-right">Next <i class="glyphicon
+   <div class="col-sm-12">
+       <a href="module5.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Previous</a>
+       <a href="module7.html" class="btn btn-default pull-right">Next <i class="glyphicon
 glyphicon-chevron-right"></i></a>
-
-
-</div>
+   </div>
 </div>

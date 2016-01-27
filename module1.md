@@ -18,7 +18,7 @@ download the [zip file for the project](https://github.com/macdonst/push-worksho
 
         git clone https://github.com/macdonst/push-workshop
 
-1. Now copy the **solutions/www1**, **config.xml** and **pgbot-love.png** files from the push-workshop project into your newly created project root and overwrite the default files currently there.
+1. Now copy the **solutions/www1**, **config.xml** and **pg-wings.png** files from the push-workshop project into your newly created project root and overwrite the default files currently there.
 
    > The **config.xml** file has some settings which will automatically install the project plugin dependencies, but you could optionally add them manually. The **pg-wings.png** is the default icon for this application referenced in config.xml.
 
@@ -33,9 +33,9 @@ download the [zip file for the project](https://github.com/macdonst/push-worksho
             $ phonegap run android             
             $ phonegap run android --device               
 
-      > This option requires a mobile SDK setup. If you have Mac and Xcode you should be able to use iOS, but Android requires [additional SDK installation and setup](http://developer.android.com/sdk).
+      > This option requires a mobile SDK setup. If you have Mac and Xcode you should be able to use iOS, but Android requires [additional SDK installation and setup](http://cordova.apache.org/docs/en/latest/guide/platforms/android/index.html).
 
-2. Ensure you see the application load with and you receive a deviceready event.
+2. Ensure you see the application load with and you receive a `deviceready` event.
 
     <img class="screenshot-lg" src="images/main-view.png"/>
 

@@ -4,7 +4,7 @@ title: Module 5&#58; Background Notifications
 ---
 
 ### Overview
-In this lesson we'll learn how to have our notification handler run when the app is not in the foreground without user interaction. As we mentioned in lesson 3 the notification handler is only run when the application is in the foreground or if the user taps the received notification but there is a way to signal your app to run code in the background. This is a very powerful technique which allows you to keep your app up to date.
+In this lesson we'll learn how to have our notification handler run when the app is not in the foreground and without user interaction. As we mentioned in lesson 3 the notification handler is only run when the application is in the foreground or if the user taps the received notification but there is a way to signal your app to run code in the background. This is a very powerful technique which allows you to keep your app up to date.
 
 ## Steps
 1. Open a remote debugging session with your application (uses the resources from lesson 2).
@@ -52,7 +52,14 @@ In this lesson we'll learn how to have our notification handler run when the app
 
    > Strictly speaking the call to `finish` is only required on iOS. It is a no-op on other platforms. The reason we need to do this on iOS is the OS only provides you with 30 seconds of background processing and we need to tell the OS we are done. Failure to do this may cause the OS to kill your app for mis-behaving.
 
-6. Now we'll need to modify our push scripts to inform the device we want to do some background processing.
+6. Run the app using the PhoneGap CLI:
+
+           $ phonegap run ios
+           $ phonegap run ios --device
+           $ phonegap run android  
+           $ phonegap run android --device               
+
+7. Now we'll need to modify our push scripts to inform the device we want to do some background processing.
 
    - **For Android**            
      1. Open **server/gcmService.js**
@@ -71,13 +78,13 @@ In this lesson we'll learn how to have our notification handler run when the app
 
      3. Run `node apnsServer.js`
 
-7. As well as the notification appearing in your shade you should see the line:
+8. As well as the notification appearing in your shade you should see the line:
 
         notification event
 
    in the debugger console.
 
-8. Now start your app, not by clicking the push notification, instead launch the app from the app drawer. When the app starts up you'll notice the UI has already been updated with the data from the new push.
+9. Now start your app, not by clicking the push notification, instead launch the app from the app drawer. When the app starts up you'll notice the UI has already been updated with the data from the new push.
 
 ## Discussion
 
@@ -85,7 +92,7 @@ What we've demonstrated here is not very exciting but you can think of other use
 
 <div class="row" style="margin-top:40px;">
     <div class="col-sm-12">
-        <a href="module3.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Previous</a>
+        <a href="module4.html" class="btn btn-default"><i class="glyphicon glyphicon-chevron-left"></i> Previous</a>
         <a href="module6.html" class="btn btn-default pull-right">Next <i class="glyphicon
 glyphicon-chevron-right"></i></a>
     </div>

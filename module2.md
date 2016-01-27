@@ -37,6 +37,8 @@ and add the following into the `deviceready` handling section, **Note:** if you 
             console.log("push error = " + e.message);
         });
 
+   > You may be wondering why we are checking the registration ID against one we saved in local storage. Basically, Apple or Google may refresh your registration ID so it always pays to see if the ID has changed. You can use this opportunity to remove an old ID from your app server and add the new ID.
+
 2. Run the app using the PhoneGap CLI:
 
             $ phonegap run ios
