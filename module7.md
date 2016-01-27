@@ -28,23 +28,30 @@ In this lesson we'll learn how to launch to a specific location in your applicat
              '</div>';
            cards.innerHTML += push;
          }
+
+         app.push.finish(function() {
+             console.log('success');
+         }, function() {
+             console.log('error');
+         });
         });
 
    > Notice that the `url` property is added to the `additionalData` object. If you send a property that doesn't conform to `title`, `message`, `count` or `sound` it will be placed in the `additionalData` object.
 
 2. While still in **www/js/index.js** add the following code under the action button callbacks we added in the previous lesson:
-        ,
-        toggle: function (id) {
-          var cats = document.querySelector("#cats");
-          var cards = document.querySelector("#cards");
-          if (cats.style.display === 'none') {
-            cats.style.display = 'block';
-            cards.style.display = 'none';
-          } else {
-            cats.style.display = 'none';
-            cards.style.display = 'block';
+
+          ,
+          toggle: function (id) {
+            var cats = document.querySelector("#cats");
+            var cards = document.querySelector("#cards");
+            if (cats.style.display === 'none') {
+              cats.style.display = 'block';
+              cards.style.display = 'none';
+            } else {
+              cats.style.display = 'none';
+              cards.style.display = 'block';
+            }
           }
-        }
 
 3. Run the app using the PhoneGap CLI:
 
@@ -122,6 +129,12 @@ In this lesson we'll learn how to launch to a specific location in your applicat
              '</div>';
            cards.innerHTML += push;
          }
+
+         app.push.finish(function() {
+             console.log('success');
+         }, function() {
+             console.log('error');
+         });
         });
 
    > We are using another property that is added to the `additionalData` object called `foreground`. You don't have to explicitly send this property from your push service. The plugin itself will set `foreground` to `true` when the notification is received while the user is in your app and `false` in the app is in the background. This allows you to program different behaviors depending on how the notification was received.
