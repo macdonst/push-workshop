@@ -3,7 +3,7 @@
     <name>PushWorkshop</name>
 
     <description>
-      A sample app for PhoneGap Day Push Workshop 2015.
+      A sample app for PhoneGap Day Push Workshop 2016.
     </description>
 
     <author email="dev@phonegap.com" href="http://phonegap.com">
@@ -22,6 +22,10 @@
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
 
+    <preference name="StatusBarOverlaysWebView" value="false" />
+    <preference name="StatusBarBackgroundColor" value="#ee6e73" />
+    <preference name="StatusBarStyle" value="blacktranslucent" />
+
     <platform name="android">
         <allow-intent href="market:*" />
     </platform>
@@ -32,7 +36,8 @@
     </platform>
 
     <plugin name="cordova-plugin-whitelist" spec="1" />
-    <plugin name="cordova-plugin-statusbar" spec="~2.0.0" />
+    <plugin name="cordova-plugin-statusbar" spec="~2.1.0" />
     <plugin name="phonegap-plugin-push" spec="~1.5.3" />
     <plugin name="cordova-plugin-console" spec="~1.0.2" />
+    <plugin name="cordova-plugin-dialogs" spec="~1.2.0" />
 </widget>
